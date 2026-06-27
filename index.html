@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV - Giselle Sophie</title>
     <style>
-        /* Estilos Elegantes */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
@@ -28,12 +27,29 @@
         h2 { font-family: 'Georgia', serif; font-weight: normal; color: #b78a75; }
         p { font-style: italic; margin-bottom: 20px; }
         input {
-            width: 100%;
             padding: 12px;
-            margin: 10px 0;
+            margin: 0;
             border: 1px solid #dcd3cc;
             border-radius: 8px;
             box-sizing: border-box;
+        }
+        select {
+            padding: 12px 8px;
+            border: 1px solid #dcd3cc;
+            border-radius: 8px;
+            background: white;
+            color: #5a4a42;
+            font-size: 0.88em;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .phone-row {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .phone-row input {
+            flex: 1;
         }
         button {
             background-color: #b78a75;
@@ -57,7 +73,50 @@
 
         <!-- Fase de Identificación -->
         <div id="auth">
-            <input type="text" id="whatsapp" placeholder="Identifícate con tu número (ej: 51999888777)">
+            <div class="phone-row">
+                <select id="countryCode">
+                    <optgroup label="── Latinoamérica ──">
+                        <option value="51" selected>🇵🇪 +51</option>
+                        <option value="54">🇦🇷 +54</option>
+                        <option value="591">🇧🇴 +591</option>
+                        <option value="55">🇧🇷 +55</option>
+                        <option value="56">🇨🇱 +56</option>
+                        <option value="57">🇨🇴 +57</option>
+                        <option value="506">🇨🇷 +506</option>
+                        <option value="53">🇨🇺 +53</option>
+                        <option value="1829">🇩🇴 +1829</option>
+                        <option value="593">🇪🇨 +593</option>
+                        <option value="503">🇸🇻 +503</option>
+                        <option value="502">🇬🇹 +502</option>
+                        <option value="504">🇭🇳 +504</option>
+                        <option value="52">🇲🇽 +52</option>
+                        <option value="505">🇳🇮 +505</option>
+                        <option value="507">🇵🇦 +507</option>
+                        <option value="595">🇵🇾 +595</option>
+                        <option value="598">🇺🇾 +598</option>
+                        <option value="58">🇻🇪 +58</option>
+                    </optgroup>
+                    <optgroup label="── Resto del mundo ──">
+                        <option value="1">🇺🇸 +1</option>
+                        <option value="1">🇨🇦 +1</option>
+                        <option value="34">🇪🇸 +34</option>
+                        <option value="44">🇬🇧 +44</option>
+                        <option value="49">🇩🇪 +49</option>
+                        <option value="33">🇫🇷 +33</option>
+                        <option value="39">🇮🇹 +39</option>
+                        <option value="351">🇵🇹 +351</option>
+                        <option value="61">🇦🇺 +61</option>
+                        <option value="81">🇯🇵 +81</option>
+                        <option value="82">🇰🇷 +82</option>
+                        <option value="86">🇨🇳 +86</option>
+                        <option value="91">🇮🇳 +91</option>
+                        <option value="7">🇷🇺 +7</option>
+                        <option value="27">🇿🇦 +27</option>
+                        <option value="234">🇳🇬 +234</option>
+                    </optgroup>
+                </select>
+                <input type="tel" id="whatsapp" placeholder="Número local">
+            </div>
             <button onclick="identificar()">Entrar</button>
         </div>
 
@@ -68,13 +127,15 @@
             <!-- <button onclick="confirmarAsistencia('No')">No podré asistir</button> -->
         </div>
     </div>
+
     <script>
         let currentUser = "";
 
         function identificar() {
-            const num = document.getElementById('whatsapp').value;
-            if (num.length >= 9) {
-                currentUser = num;
+            const code = document.getElementById('countryCode').value;
+            const num = document.getElementById('whatsapp').value.trim().replace(/\D/g, '');
+            if (num.length >= 7) {
+                currentUser = code + num;
                 document.getElementById('auth').style.display = 'none';
                 document.getElementById('crud').classList.remove('hidden');
                 document.getElementById('welcome').innerText = "¡Hola! ¿Nos acompañas?";
