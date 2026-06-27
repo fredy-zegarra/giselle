@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV - Giselle Sophie</title>
+    <style>
+        /* Estilos Elegantes */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #5a4a42;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            border: 1px solid #dcd3cc;
+        }
+        h2 { font-family: 'Georgia', serif; font-weight: normal; color: #b78a75; }
+        p { font-style: italic; margin-bottom: 20px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #dcd3cc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #b78a75;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        button:hover { background-color: #9e7563; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Ven y celebra conmigo mis quinceaños</h2>
+        <p>Giselle Sophie</p>
+
+        <!-- Fase de Identificación -->
+        <div id="auth">
+            <input type="text" id="whatsapp" placeholder="Identifícate con tu número (ej: 51999888777)">
+            <button onclick="identificar()">Entrar</button>
+        </div>
+
+        <!-- Fase de CRUD -->
+        <div id="crud" class="hidden">
+            <h3 id="welcome"></h3>
+            <button onclick="confirmarAsistencia('Sí')">Confirmar Asistencia</button>
+            <!-- <button onclick="confirmarAsistencia('No')">No podré asistir</button> -->
+        </div>
+    </div>
+    <script>
+        let currentUser = "";
+
+        function identificar() {
+            const num = document.getElementById('whatsapp').value;
+            if (num.length >= 9) {
+                currentUser = num;
+                document.getElementById('auth').style.display = 'none';
+                document.getElementById('crud').classList.remove('hidden');
+                document.getElementById('welcome').innerText = "¡Hola! ¿Nos acompañas?";
+            } else {
+                alert("Por favor, ingresa un número válido.");
+            }
+        }
+
+        function confirmarAsistencia(estado) {
+            localStorage.setItem(currentUser, estado);
+            const mensaje = "Gracias por celebrar conmigo este momento 🎀\n\nTu presencia es mi mayor regalo. Si aun así deseas tener un detalle conmigo, te agradeceré que sea una contribución en efectivo. Dispondré de una urna (o un buzón) para recoger los sobres durante el evento.";
+            const url = `https://wa.me/${currentUser}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+            alert("¡Muchas gracias! Registro guardado.");
+        }
+    </script>
+</body>
+</html>
